@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify,send_from_directory
 import requests
 
 app = Flask(__name__)
@@ -10,6 +10,9 @@ TELEGRAM_CHANNEL_ID = "@BaliyaOrderChanel"  # Заміни на свій кан�
 def index():
     return render_template('../templates/index.html')
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('/static/images', 'pool_118770.ico')
 
 @app.route('/send_order', methods=['POST'])
 def send_order():
