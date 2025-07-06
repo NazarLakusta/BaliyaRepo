@@ -8,7 +8,7 @@ TELEGRAM_CHANNEL_ID = "@BaliyaOrderChanel"  # Заміни на свій кан�
 
 @app.route('/')
 def index():
-    return render_template('../templates/index.html')
+    return render_template('index.html')
 
 @app.route('/favicon.ico')
 def favicon():
