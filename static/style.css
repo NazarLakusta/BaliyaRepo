@@ -1,0 +1,43 @@
+body {
+  background-color: #f8f9fa;
+}
+
+#category-menu .btn,
+#subcategory-menu .btn {
+  flex-grow: 1;
+  min-width: 100px;
+}
+
+.item-card {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.item-card:hover {
+  transform: scale(1.05);
+}
+
+.order-quantity-btn {
+  cursor: pointer;
+  padding: 0 8px;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item span {
+  flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  #category-menu .btn,
+  #subcategory-menu .btn {
+    min-width: 45%;
+    margin-bottom: 0.5rem;
+  }
+}

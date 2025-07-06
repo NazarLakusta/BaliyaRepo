@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Baliya-Order</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/style.css" />
+</head>
+<body>
+  <header class="bg-primary text-white text-center py-3">
+    <h2>Baliya-Order</h2>
+  </header>
+
+  <div class="container mt-3">
+    <div class="mb-3">
+      <input type="text" class="form-control mb-2" placeholder="Номер браслету" id="bracelet-number" />
+      <input type="text" class="form-control mb-2" placeholder="Місце посадки (наприклад, столик №5)" id="seat-location" />
+      <textarea class="form-control" rows="2" placeholder="Коментар / побажання клієнта" id="client-comment"></textarea>
+    </div>
+
+    <div class="d-flex justify-content-around mb-3" id="category-menu">
+      <button class="btn btn-outline-primary category-btn" data-category="Їда">Їда</button>
+      <button class="btn btn-outline-primary category-btn" data-category="Напої">Напої</button>
+    </div>
+
+    <div id="subcategory-menu" class="d-flex flex-wrap justify-content-center mb-3"></div>
+
+<div class="mb-3">
+  <input type="text" class="form-control" id="search-input" placeholder="Пошук страви або напою...">
+</div>
+
+
+    <div class="row" id="items-container"></div>
+
+    <h5 class="mt-4">Ваше замовлення:</h5>
+    <ul class="list-group mb-4" id="order-list"></ul>
+  </div>
+
+  <!-- Кнопки керування замовленням -->
+  <div class="text-center mb-4">
+    <button id="show-order-btn" class="btn btn-primary me-2">Показати замовлення</button>
+    <button id="clear-order-btn" class="btn btn-danger">Очистити замовлення</button>
+  </div>
+
+  <!-- Модальне вікно для показу замовлення -->
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderModalLabel">Ваше замовлення</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+        </div>
+        <div class="modal-body" id="orderModalBody">
+          <!-- Тут з'явиться інформація про замовлення -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" onclick="sendOrderToTelegram()">Відправити у канал</button>
+
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальне вікно вибору розміру -->
+<div class="modal fade" id="sizeModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Оберіть розмір піци</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+      </div>
+      <div class="modal-body" id="sizeModalBody"></div>
+    </div>
+  </div>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/script.js"></script>
+</body>
+</html>
