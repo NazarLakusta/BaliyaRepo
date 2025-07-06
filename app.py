@@ -12,7 +12,7 @@ def index():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory('/static/images', 'pool_118770.ico')
+    return send_from_directory('/static', 'favicon.ico')
 
 @app.route('/send_order', methods=['POST'])
 def send_order():
