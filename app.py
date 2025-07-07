@@ -25,6 +25,9 @@ def index():
 def health():
     return "OK", 200
 
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=8080)
 #
 # @app.route('/send_order', methods=['POST'])
 # def send_order():
