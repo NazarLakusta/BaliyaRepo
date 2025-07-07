@@ -15,17 +15,12 @@ WAITER_CHANNELS = {
     "Oleh": "@Baliya_Yura"
 }
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/health')
 def health():
     return 'OK', 200
 
-@app.route('/favicon.ico')
-def favicon():
-    return '', 204
+
 #
 # @app.route('/send_order', methods=['POST'])
 # def send_order():
@@ -54,22 +49,4 @@ def favicon():
 #     }
 #     return requests.post(url, data=payload)
 
-def format_order_message(data):
-    text = f"<b>Нове замовлення</b>\n"
-    text += f"<b>Час:</b> {data.get('time', '-')}\n"
-    text += f"<b>Номер браслету:</b> {data.get('bracelet', '-')}\n"
-    text += f"<b>Місце посадки:</b> {data.get('seat', '-')}\n"
-    text += f"<b>Коментар клієнта:</b> {data.get('comment', '-')}\n"
-    text += f"<b>Офіціант:</b> {data.get('waiter', '-')}\n\n"
-    text += "<b>Замовлення:</b>\n"
-
-    for item in data.get('order', []):
-        name = item.get('name')
-        qty = item.get('qty')
-        price = item.get('price')
-        text += f"{name} - {qty} × {price} грн = {qty * price} грн\n"
-
-    total = sum(item['qty'] * item['price'] for item in data.get('order', []))
-    text += f"\n<b>Загальна сума:</b> {total} грн"
-    return text
 
