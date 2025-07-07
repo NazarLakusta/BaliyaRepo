@@ -408,11 +408,13 @@ function sendOrderToTelegram() {
     return;
   }
 
+  const waiterName = document.getElementById('waiter-name').value.trim();
   const orderData = {
     time: now,
     bracelet: braceletNumber,
     seat: seatLocation,
     comment: clientComment,
+    waiter: waiterName,
     order: order
   };
 
