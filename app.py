@@ -19,6 +19,10 @@ WAITER_CHANNELS = {
 def index():
     return render_template('index.html')
 
+@app.route('/health')
+def health():
+    return 'OK', 200
+
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
