@@ -22,33 +22,33 @@ def index():
 @app.route('/favicon.ico')
 def favicon():
     return '', 204
-
-@app.route('/send_order', methods=['POST'])
-def send_order():
-    data = request.json
-    waiter = data.get('waiter', None)
-    message = format_order_message(data)
-
-    # Надсилаємо в головний канал
-    main_response = send_to_telegram(TELEGRAM_MAIN_CHANNEL_ID, message)
-
-    # Надсилаємо офіціанту, якщо знайдений
-    if waiter and waiter in WAITER_CHANNELS:
-        send_to_telegram(WAITER_CHANNELS[waiter], message)
-
-    if main_response.ok:
-        return jsonify({"status": "success"})
-    else:
-        return jsonify({"status": "error", "message": main_response.text}), 500
-
-def send_to_telegram(chat_id, text):
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": chat_id,
-        "text": text,
-        "parse_mode": "HTML"
-    }
-    return requests.post(url, data=payload)
+#
+# @app.route('/send_order', methods=['POST'])
+# def send_order():
+#     data = request.json
+#     waiter = data.get('waiter', None)
+#     message = format_order_message(data)
+#
+#     # Надсилаємо в головний канал
+#     main_response = send_to_telegram(TELEGRAM_MAIN_CHANNEL_ID, message)
+#
+#     # Надсилаємо офіціанту, якщо знайдений
+#     if waiter and waiter in WAITER_CHANNELS:
+#         send_to_telegram(WAITER_CHANNELS[waiter], message)
+#
+#     if main_response.ok:
+#         return jsonify({"status": "success"})
+#     else:
+#         return jsonify({"status": "error", "message": main_response.text}), 500
+#
+# def send_to_telegram(chat_id, text):
+#     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+#     payload = {
+#         "chat_id": chat_id,
+#         "text": text,
+#         "parse_mode": "HTML"
+#     }
+#     return requests.post(url, data=payload)
 
 def format_order_message(data):
     text = f"<b>Нове замовлення</b>\n"
