@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 import requests
 import os
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+app = Flask(__name__)
 
 # Телеграм-бот токен та основний канал
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8084003144:AAHiRpUk3yNxs4_AJS1eT4AsD3yMy_zrOT8")
@@ -16,10 +16,14 @@ WAITER_CHANNELS = {
 }
 
 
+
+@app.route('/')
+def index():
+    return "Hello, world!"
+
 @app.route('/health')
 def health():
-    return 'OK', 200
-
+    return "OK", 200
 
 #
 # @app.route('/send_order', methods=['POST'])
