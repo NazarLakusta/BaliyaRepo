@@ -4,16 +4,16 @@ import os
 
 app = Flask(__name__)
 
-# Телеграм-бот токен та основний канал
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8084003144:AAHiRpUk3yNxs4_AJS1eT4AsD3yMy_zrOT8")
-TELEGRAM_MAIN_CHANNEL_ID = "@BaliyaOrderChanel"
-
-# Словник офіціантів та їх каналів
-WAITER_CHANNELS = {
-    "Nazar": "@Baliya_Nazar",
-    "Karina": "@Baliya_Karina",
-    "Oleh": "@Baliya_Yura"
-}
+# # Телеграм-бот токен та основний канал
+# TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8084003144:AAHiRpUk3yNxs4_AJS1eT4AsD3yMy_zrOT8")
+# TELEGRAM_MAIN_CHANNEL_ID = "@BaliyaOrderChanel"
+#
+# # Словник офіціантів та їх каналів
+# WAITER_CHANNELS = {
+#     "Nazar": "@Baliya_Nazar",
+#     "Karina": "@Baliya_Karina",
+#     "Oleh": "@Baliya_Yura"
+# }
 
 
 
