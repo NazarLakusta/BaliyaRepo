@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Замовлення - Baliya</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .order-card { transition: all 0.3s; }
+        .order-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .status-badge { font-size: 0.8rem; padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-3 position-relative">
+        <h2>Baliya - Замовлення</h2>
+        <div class="position-absolute top-0 end-0 mt-2 me-3">
+            <span class="me-2">{{ current_user.name }}</span>
+            <a href="{{ url_for('logout') }}" class="btn btn-sm btn-light">Вийти</a>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Список замовлень</h3>
+            <a href="{{ url_for('index') }}" class="btn btn-primary">Нове замовлення</a>
+        </div>
+
+        <div class="mb-3">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active" data-status="all">Всі</button>
+                <button type="button" class="btn btn-outline-primary" data-status="new">Нові</button>
+                <button type="button" class="btn btn-outline-primary" data-status="partial">Частково</button>
+                <button type="button" class="btn btn-outline-primary" data-status="completed">Виконані</button>
+            </div>
+        </div>
+
+        <div id="orders-container" class="row">
+            <!-- Заказы будут загружаться через AJAX -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrders('all');
+
+            // Фильтрация заказов
+            document.querySelectorAll('[data-status]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('[data-status]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    loadOrders(btn.dataset.status);
+                });
+            });
+        });
+
+        function loadOrders(status) {
+            fetch(`/api/orders?status=${status}`)
+                .then(response => response.json())
+                .then(data => renderOrders(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function renderOrders(orders) {
+            const container = document.getElementById('orders-container');
+            container.innerHTML = '';
+
+            if (orders.length === 0) {
+                container.innerHTML = '<div class="col-12"><div class="alert alert-info">Замовлень не знайдено</div></div>';
+                return;
+            }
+
+            orders.forEach(order => {
+                const orderDate = new Date(order.created_at).toLocaleString();
+                let statusClass = '';
+                switch(order.status) {
+                    case 'new': statusClass = 'bg-warning text-dark'; break;
+                    case 'partial': statusClass = 'bg-info text-white'; break;
+                    case 'completed': statusClass = 'bg-success text-white'; break;
+                }
+
+                const orderCard = `
+                    <div class="col-md-6 mb-4">
+                        <div class="card order-card">
+                            <div class="card-header d-flex justify-content-between">
+                                <span>Замовлення #${order.id}</span>
+                                <span class="badge status-badge ${statusClass}">${getStatusText(order.status)}</span>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Час:</strong> ${orderDate}</p>
+                                <p><strong>Браслет:</strong> ${order.bracelet_number}</p>
+                                <p><strong>Місце:</strong> ${order.seat_place}</p>
+                                <p><strong>Офіціант:</strong> ${order.waiter_name}</p>
+
+                                <h6>Страви:</h6>
+                                <ul class="list-group mb-3">
+                                    ${order.items.map(item => `
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>${item.item_name} (${item.quantity} × ${item.price} грн)</span>
+                                            <span>${item.issued_quantity}/${item.quantity} видано</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5>Сума: ${order.total} грн</h5>
+                                    <a href="/order/${order.id}" class="btn btn-sm btn-primary">Деталі</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += orderCard;
+            });
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                'new': 'Новий',
+                'partial': 'Частково',
+                'completed': 'Виконано'
+            };
+            return statuses[status] || status;
+        }
+    </script>
+</body>
+</html>

@@ -11,16 +11,16 @@
 
 </head>
 <body>
-  <header class="bg-primary text-white text-center py-3">
+<!-- Удалите старый select с waiter-name -->
+<!-- Добавьте в header: -->
+<header class="bg-primary text-white text-center py-3 position-relative">
     <h2>Baliya-Order</h2>
-  </header>
+    <div class="position-absolute top-0 end-0 mt-2 me-3">
+        <span class="me-2">{{ current_user.name }}</span>
+        <a href="{{ url_for('logout') }}" class="btn btn-sm btn-light">Вийти</a>
+    </div>
+</header>
 
-  <select class="form-control mb-2" id="waiter-name">
-  <option value="" disabled selected>Оберіть офіціанта</option>
-  <option value="Nazar">Назар</option>
-  <option value="Karina">Каріна</option>
-  <option value="Yura">Юра</option>
-</select>
 
 
   <div class="container mt-3">
@@ -54,6 +54,10 @@
     <button id="clear-order-btn" class="btn btn-danger">Очистити замовлення</button>
   </div>
 
+<!-- После кнопок управления заказом добавьте: -->
+<div class="text-center mt-4">
+    <a href="/orders" class="btn btn-outline-primary">Переглянути всі замовлення</a>
+</div>
   <!-- Модальне вікно для показу замовлення -->
   <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
