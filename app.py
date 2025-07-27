@@ -8,7 +8,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # Конфигурация приложения
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+pg8000://postgres:123@localhost/db_baliya_web_orde'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_strong_secret_key_here'  # Замените на надежный ключ!
 
